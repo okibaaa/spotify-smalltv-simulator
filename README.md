@@ -49,7 +49,8 @@ make demo            # http://localhost:8888
 
 # 2) シミュレーター
 cd spotify-smalltv-simulator
-make serve           # http://localhost:8000/  (PORT=8080 make serve でも可)
+python3 -m http.server 8000
+# → http://localhost:8000/   （make がある環境なら `make serve` でも同じ）
 ```
 
 「Daemon」タブを選び、Daemon URL に `http://localhost:8888` を入れて **Connect**。
@@ -60,7 +61,7 @@ make serve           # http://localhost:8000/  (PORT=8080 make serve でも可)
 > **GitHub Pages 版について**
 > 公開版は `https` なので、`http://localhost` へのアクセスがブラウザにブロックされる場合があります
 > （Chrome / Firefox は localhost を例外扱いしますが、Safari などは拒否します）。
-> ライブ表示はローカルで `make serve` して開くのが確実です。
+> ライブ表示はローカルで `python3 -m http.server`（`make serve`）して開くのが確実です。
 
 ## 実装
 
