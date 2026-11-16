@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spotify SmallTV — Web Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <h1>Spotify SmallTV <span>Simulator</span></h1>
+    </div>
+    <p class="lead">
+      A browser preview of the GeekMagic SmallTV-Ultra (ESP8266 + ST7789 240×240) firmware from
+      <a href="https://github.com/okibaaa/spotify-smalltv">okibaaa/spotify-smalltv</a>.
+      It reads <code>/api/now</code> and <code>/api/art</code> from the daemon, or runs
+      entirely on a built-in mock source.
+    </p>
+  </header>
+
+  <main>
+    <section class="stage">
+      <div class="device">
+        <div class="bezel">
+          <canvas id="screen" width="240" height="240" aria-label="240x240 device display"></canvas>
+        </div>
+        <div class="device-meta">
+          <span class="device-name">SmallTV-Ultra</span>
+          <span class="device-spec">240 × 240 · RGB565</span>
+        </div>
+      </div>
+
+      <div class="badges">
+        <span id="state-badge" class="badge Boot">Boot</span>
+        <span id="mode-badge" class="chip">mock</span>
+        <span class="chip">115,200 B / frame</span>
+      </div>
+
+      <p class="note">
+        Same geometry as the firmware: full-screen 240×240 artwork, a 14&nbsp;px black band,
+        and a 4&nbsp;px bar at y&nbsp;=&nbsp;231. The bar is partially redrawn once per second.
+      </p>
+    </section>
+
+    <aside class="panel">
+      <section class="group">
+        <h2>Data source</h2>
+        <div class="segmented" role="group" aria-label="Data source">
+          <button type="button" id="src-mock" class="seg active">Mock</button>
+          <button type="button" id="src-live" class="seg">Daemon</button>
+        </div>
+        <label class="field">
+          <span>Daemon URL</span>
+          <input id="daemon-url" type="url" spellcheck="false" autocomplete="off" placeholder="http://localhost:8888">
+        </label>
+        <button type="button" id="connect" class="primary">Connect / reconnect</button>
+        <p id="source-hint" class="hint"></p>
+      </section>
+
+      <section class="group" id="mock-controls">
+        <h2>Mock scenarios</h2>
+        <div class="grid">
+          <button type="button" data-action="play">Play</button>
+          <button type="button" data-action="pause">Pause</button>
+          <button type="button" data-action="next">Next track</button>
+          <button type="button" data-action="noart">No artwork</button>
+          <button type="button" data-action="artfail">Artwork 404</button>
+          <button type="button" data-action="stale">Spotify outage</button>
+          <button type="button" data-action="daemondown">Daemon down</button>
+          <button type="button" data-action="wifidown">Wi-Fi lost</button>
+          <button type="button" data-action="reset" class="wide">Recover / reset</button>
+        </div>
+        <label class="field compact">
+          <span>Poll interval (s)</span>
+          <input id="poll-interval" type="number" min="1" max="30" step="1" value="5">
+        </label>
+      </section>
+
+      <section class="group">
+        <h2>Payload <code>/api/now</code></h2>
+        <pre id="json" class="code">—</pre>
+      </section>
+
+      <section class="group">
+        <h2>Serial log</h2>
+        <pre id="log" class="code log" aria-live="polite"></pre>
+      </section>
+    </aside>
+  </main>
+
+  <footer>
+    Static files only — no build step. Works on GitHub Pages, any static host, or <code>file://</code>.
+    Source: <a href="https://github.com/okibaaa/spotify-smalltv-simulator">okibaaa/spotify-smalltv-simulator</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
