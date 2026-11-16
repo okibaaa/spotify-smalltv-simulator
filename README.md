@@ -40,7 +40,7 @@ GeekMagic SmallTV-Ultra（ESP8266 + ST7789 240×240）用ファームウェア
 
 ### 2. ライブモード（実データを表示）
 
-`spotify-smalltv` のデーモンを起動し、このページをローカルの HTTP サーバーで配信します。
+`spotify-smalltv` のデーモンを起動し、このリポジトリをローカルの HTTP サーバーで配信します。
 
 ```bash
 # 1) デーモン（デモモードで OK）
@@ -49,8 +49,7 @@ make demo            # http://localhost:8888
 
 # 2) シミュレーター
 cd spotify-smalltv-simulator
-python3 -m http.server 8000
-# → http://localhost:8000/
+make serve           # http://localhost:8000/  (PORT=8080 make serve でも可)
 ```
 
 「Daemon」タブを選び、Daemon URL に `http://localhost:8888` を入れて **Connect**。
@@ -61,7 +60,7 @@ python3 -m http.server 8000
 > **GitHub Pages 版について**
 > 公開版は `https` なので、`http://localhost` へのアクセスがブラウザにブロックされる場合があります
 > （Chrome / Firefox は localhost を例外扱いしますが、Safari などは拒否します）。
-> ライブ表示はローカルで `python3 -m http.server` して開くのが確実です。
+> ライブ表示はローカルで `make serve` して開くのが確実です。
 
 ## 実装
 
@@ -72,6 +71,7 @@ python3 -m http.server 8000
 | `index.html` | レイアウトと操作パネル |
 | `style.css` | ダークテーマ、実機風ベゼル、レスポンシブ |
 | `app.js` | RGB565 のエンコード / デコード、描画、ファームウェアの状態機械、モック / デーモンのデータソース |
+| `Makefile` | `make serve`（`python3 -m http.server` のショートカット） |
 
 `app.js` の `Screen` と `Firmware` は、それぞれ `firmware/src/display.cpp` と
 `firmware/src/main.cpp` の対応する処理を写したものです。ファーム側を変更したときは、
